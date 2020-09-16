@@ -37,11 +37,12 @@ class ExtractorModel(models.Model):
     name = models.CharField(max_length=32)
     module_url = models.URLField()
     type = models.CharField(max_length=16, default='extractor')
-    engine = models.ForeignKey(EngineModel, on_delete=models.DO_NOTHING, related_name='extractor', null=True)
+    # engine = models.ForeignKey(EngineModel, on_delete=models.DO_NOTHING, related_name='extractor', null=True)
     status = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = ('name', 'module_url', 'engine')
+        # unique_together = ('name', 'module_url', 'engine')
+        unique_together = ('name', 'module_url',)
 
     def save(self, *args, **kwargs):
         self.check_status()
@@ -91,8 +92,8 @@ class DatasetModel(models.Model):
 
 
 class FeatureModel(models.Model):
-    dataset = models.ForeignKey(DatasetModel, on_delete=models.DO_NOTHING)
-    extractor = models.ForeignKey(ExtractorModel, on_delete=models.DO_NOTHING)
+    dataset = models.ForeignKey(DatasetModel, on_delete=models.DO_NOTHING,related_name='feature')
+    extractor = models.ForeignKey(ExtractorModel, on_delete=models.DO_NOTHING,related_name='feature')
     idx = models.IntegerField(default=0)
     path = models.FilePathField(path='/dataset/features',
                                 allow_files=True, allow_folders=False, recursive=False, unique=True)
