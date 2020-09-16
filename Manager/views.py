@@ -7,7 +7,7 @@ import os
 
 
 class ExtractorViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = ExtractorModel.objects.filter(engine__name=ENGINE)
+    queryset = ExtractorModel.objects.filter(feature__dataset__engine__name=ENGINE)
     serializer_class = ExtractorSerializer
 
     def get_queryset(self):

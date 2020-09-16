@@ -32,7 +32,7 @@ def module_load_init(**__):
 
     from Manager.models import DatasetModel, ExtractorModel, FeatureModel
     datasets = DatasetModel.objects.filter(engine__name=ENGINE)
-    extractors = ExtractorModel.objects.filter(engine__name=ENGINE)
+    extractors = ExtractorModel.objects.filter(feature__dataset__engine__name=ENGINE)
 
     features = defaultdict(dict)
     for d in datasets:
